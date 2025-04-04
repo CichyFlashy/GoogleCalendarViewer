@@ -6,25 +6,27 @@ Ta aplikacja pozwala użytkownikowi na podanie linku do swojego kalendarza Googl
 
 🚀 Uruchomienie
 1. Klonowanie repozytorium
-bash
-git clone https://github.com/TwójUsername/GoogleCalendarAlert.git
+```sh
+git clone https://github.com/CichyFlashy/GoogleCalendarViewer
 cd GoogleCalendarAlert
+```
 2. Instalacja wymaganych pakietów
 Upewnij się, że masz zainstalowanego Pythona (minimum 3.7) i pip.
 
 Zainstaluj wymagane biblioteki:
-bash
+```sh
 pip install -r requirements.txt
-
+```
 Jeśli nie masz jeszcze pliku requirements.txt, to uruchom poniższe polecenie, aby go wygenerować:
-bash
+```sh
 pip freeze > requirements.txt
-
+```
 3. Uruchomienie aplikacji
 Uruchom aplikację Flask:
 
-bash
+```sh
 python app.py
+```
 Aplikacja będzie dostępna pod adresem http://localhost:5002.
 
 💻 Funkcjonalności
