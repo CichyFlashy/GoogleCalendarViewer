@@ -27,7 +27,7 @@ Uruchom aplikację Flask:
 ```sh
 python app.py
 ```
-Aplikacja będzie dostępna pod adresem http://localhost:5002.
+Aplikacja będzie dostępna pod adresem http://localhost:5000.
 
 💻 Funkcjonalności
 Podanie własnego linku ICS: Użytkownicy mogą podać link do swojego kalendarza .ics, aby wyświetlić nadchodzące wydarzenia.
