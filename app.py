@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import requests
 from ics import Calendar
 from datetime import datetime, timezone
@@ -10,35 +10,27 @@ ICS_URL = "https://calendar.google.com/calendar/ical/mcichos45%40gmail.com/publi
 
 @app.route("/")
 def home():
-    return '<a href="/events">Zobacz wydarzenia z kalendarza</a>'
+    return render_template("home.html")
+
 
 @app.route("/events")
 def events():
     try:
         response = requests.get(ICS_URL)
-
         if response.status_code != 200:
-            return "❌ Nie udało się pobrać kalendarza."
+            return render_template("events.html", events=[], error="Nie udało się pobrać kalendarza.")
 
         calendar = Calendar(response.text)
-
         future_events = sorted(
             (event for event in calendar.events if event.begin.datetime >= datetime.now(timezone.utc)),
             key=lambda e: e.begin
         )
 
-        if not future_events:
-            return "Brak nadchodzących wydarzeń."
-
-        html = "<h1>📅 Nadchodzące wydarzenia</h1><ul>"
-        for event in future_events[:10]:
-            html += f"<li>{event.begin.format('YYYY-MM-DD HH:mm')} - {event.name}</li>"
-        html += "</ul>"
-
-        return html
+        return render_template("events.html", events=future_events[:10], error=None)
 
     except Exception as e:
-        return f"❌ Wystąpił błąd: {e}"
-
+        return render_template("events.html", events=[], error=str(e))
+    
+    
 if __name__ == "__main__":
-    app.run(debug=True, port=5002)
+    app.run(debug=True)
