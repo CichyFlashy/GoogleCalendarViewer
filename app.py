@@ -15,6 +15,7 @@ db = SQLAlchemy(app)
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), unique=True)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
 
@@ -65,6 +66,7 @@ def events():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        username = request.form.get("username")
         email = request.form.get("email")
         password = request.form.get("password")
 
@@ -73,7 +75,7 @@ def register():
             flash("Użytkownik już istnieje")
             return redirect(url_for("register"))
 
-        new_user = User(email=email, password=generate_password_hash(password))
+        new_user = User(username=username, email=email, password=generate_password_hash(password))
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
